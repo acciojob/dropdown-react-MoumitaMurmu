@@ -136,68 +136,114 @@ const states = [{
 	}]
 }];
 
+
+
+
+const initialState = {
+  selectedState: states[0],
+  selectedCity: states[0].cities[0],
+  selectedLandmark: states[0].cities[0].landmarks[0]
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SELECT_STATE":
+      const newState = states[action.payload];
+      return {
+        ...state,
+        selectedState: newState,
+        selectedCity: newState.cities[0],
+        selectedLandmark: newState.cities[0].landmarks[0]
+      };
+    case "SELECT_CITY":
+      const newCity = state.selectedState.cities[action.payload];
+      return {
+        ...state,
+        selectedCity: newCity,
+        selectedLandmark: newCity.landmarks[0]
+      };
+    case "SELECT_LANDMARK":
+      const newLandmark = state.selectedCity.landmarks[action.payload];
+      return {
+        ...state,
+        selectedLandmark: newLandmark
+      };
+    default:
+      return state;
+  }
+}
+
 function App() {
-	const [selectedState, setSelectedState] = useState(states[0]);
-	const [selectedCity, setSelectedCity] = useState(selectedState.cities[0]);
-	const [selectedLandmark, setSelectedLandmark] = useState(selectedCity.landmarks[0]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-	const handleStateChange = (event) => {
-		const stateIndex = event.target.value;
-		const newState = states[stateIndex];
-		setSelectedState(newState);
-		setSelectedCity(newState.cities[0]);
-		setSelectedLandmark(newState.cities[0].landmarks[0]);
-	};
+  const handleStateChange = (event) => {
+    const stateIndex = event.target.value;
+    dispatch({ type: "SELECT_STATE", payload: stateIndex });
+  };
 
-	const handleCityChange = (event) => {
-		const cityIndex = event.target.value;
-		const newCity = selectedState.cities[cityIndex];
-		setSelectedCity(newCity);
-		setSelectedLandmark(newCity.landmarks[0]);
-	};
+  const handleCityChange = (event) => {
+    const cityIndex = event.target.value;
+    dispatch({ type: "SELECT_CITY", payload: cityIndex });
+  };
 
-	const handleLandmarkChange = (event) => {
-		const landmarkIndex = event.target.value;
-		const newLandmark = selectedCity.landmarks[landmarkIndex];
-		setSelectedLandmark(newLandmark);
-	};
+  const handleLandmarkChange = (event) => {
+    const landmarkIndex = event.target.value;
+    dispatch({ type: "SELECT_LANDMARK", payload: landmarkIndex });
+  };
 
-	return (
-		<div id="main">
-			<select id="state" value={states.indexOf(selectedState)} onChange={handleStateChange}>
-				{states.map((state, index) => (
-					<option key={index} value={index}>
-						{state.name}
-					</option>
-				))}
-			</select>
+  return (
+    <div id="main">
+      <select
+        id="state"
+        value={states.indexOf(state.selectedState)}
+        onChange={handleStateChange}
+      >
+        {states.map((state, index) => (
+          <option key={index} value={index}>
+            {state.name}
+          </option>
+        ))}
+      </select>
 
-			<select id="city" value={selectedState.cities.indexOf(selectedCity)} onChange={handleCityChange}>
-				{selectedState.cities.map((city, index) => (
-					<option key={index} value={index}>
-						{city.name}
-					</option>
-				))}
-			</select>
+      <select
+        id="city"
+        value={state.selectedState.cities.indexOf(state.selectedCity)}
+        onChange={handleCityChange}
+      >
+        {state.selectedState.cities.map((city, index) => (
+          <option key={index} value={index}>
+            {city.name}
+          </option>
+        ))}
+      </select>
 
-			<select id="landmark" value={selectedCity.landmarks.indexOf(selectedLandmark)} onChange={handleLandmarkChange}>
-				{selectedCity.landmarks.map((landmark, index) => (
-					<option key={index} value={index}>
-						{landmark.name}
-					</option>
-				))}
-			</select>
+      <select
+        id="landmark"
+        value={state.selectedCity.landmarks.indexOf(state.selectedLandmark)}
+        onChange={handleLandmarkChange}
+      >
+        {state.selectedCity.landmarks.map((landmark, index) => (
+          <option key={index} value={index}>
+            {landmark.name}
+          </option>
+        ))}
+      </select>
 
-			<div className="description">
-				<h2>{selectedState.name}</h2>
-				<p>{selectedState.description}</p>
-				<h3>{selectedCity.name}</h3>
-				<p>{selectedCity.description}</p>
-				<h4>{selectedLandmark.name}</h4>
-				<p>{selectedLandmark.description}</p>
-			</div>
-		</div>
-	);
+      <div className="description">
+        <h2>{state.selectedState.name}</h2>
+        <p>{state.selectedState.description}</p>
+        <h3>{state.selectedCity.name}</h3>
+        <p>{state.selectedCity.description}</p>
+        <h4>{state.selectedLandmark.name}</h4>
+        <p>{state.selectedLandmark.description}</p>
+      </div>
+    </div>
+  );
 }
 
 export default App;
+
+
+	
+					
+				
