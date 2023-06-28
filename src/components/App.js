@@ -138,15 +138,84 @@ const states = [{
 }];
 
 
-function App() 
-{
-	// Do not alter/remove main div
-	return (
-	<div id="main">
+// function App() 
+// {
+// 	// Do not alter/remove main div
+// 	return (
+// 	<div id="main">
 		
-	</div>
-	);
-}
+// 	</div>
+// 	);
+// }
 
+
+// export default App;
+
+
+function App() {
+  const [selectedState, setSelectedState] = useState(states[0]);
+  const [selectedCity, setSelectedCity] = useState(selectedState.cities[0]);
+  const [selectedLandmark, setSelectedLandmark] = useState(
+    selectedCity.landmarks[0]
+  );
+
+  const handleStateChange = (e) => {
+    const stateIndex = parseInt(e.target.value);
+    const newState = states[stateIndex];
+    setSelectedState(newState);
+    setSelectedCity(newState.cities[0]);
+    setSelectedLandmark(newState.cities[0].landmarks[0]);
+  };
+
+  const handleCityChange = (e) => {
+    const cityIndex = parseInt(e.target.value);
+    const newCity = selectedState.cities[cityIndex];
+    setSelectedCity(newCity);
+    setSelectedLandmark(newCity.landmarks[0]);
+  };
+
+  const handleLandmarkChange = (e) => {
+    const landmarkIndex = parseInt(e.target.value);
+    const newLandmark = selectedCity.landmarks[landmarkIndex];
+    setSelectedLandmark(newLandmark);
+  };
+
+  return (
+    <div id="main">
+      <select id="state" onChange={handleStateChange} value={0}>
+        {states.map((state, index) => (
+          <option key={index} value={index}>
+            {state.name}
+          </option>
+        ))}
+      </select>
+
+      <select id="city" onChange={handleCityChange} value={0}>
+        {selectedState.cities.map((city, index) => (
+          <option key={index} value={index}>
+            {city.name}
+          </option>
+        ))}
+      </select>
+
+      <select id="landmark" onChange={handleLandmarkChange} value={0}>
+        {selectedCity.landmarks.map((landmark, index) => (
+          <option key={index} value={index}>
+            {landmark.name}
+          </option>
+        ))}
+      </select>
+
+      <div id="state-title">{selectedState.name}</div>
+      <div id="state-description">{selectedState.description}</div>
+
+      <div id="city-title">{selectedCity.name}</div>
+      <div id="city-description">{selectedCity.description}</div>
+
+      <div id="landmark-title">{selectedLandmark.name}</div>
+      <div id="landmark-description">{selectedLandmark.description}</div>
+    </div>
+  );
+}
 
 export default App;
