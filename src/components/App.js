@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import "./../styles/App.css";
+
 
 const states = [{
 	name: "Madhya Pradesh",
 	description: "Madhya Pradesh, a large state in central India, retains landmarks from eras throughout Indian history.",
-	cities: [{
+	city: [{
 		name: "Indore",
-		description: "Indore is a city in west-central India. It’s known for the 7-story Rajwada Palace and the Lal Baag Palace, which date back to Indore’s 19th-century Holkar dynasty.",
+		description: "Indore is a city in west-central India. It\'s known for the 7-story Rajwada Palace and the Lal Baag Palace, which date back to Indore\'s 19th-century Holkar dynasty.",
 		landmarks: [{
 			name: "Mhow",
 			description: "Dr. Ambedkar Nagar, commonly known as Mhow, is a cantonment in the Indore district in Madhya Pradesh state of India. It is located 23 kilometres south-west of Indore city, towards Mumbai on the old Mumbai-Agra Road.",
@@ -16,17 +17,17 @@ const states = [{
 		}]
 	}, {
 		name: "Bhopal",
-		description: "Bhopal is a city in the central Indian state of Madhya Pradesh. It's one of India’s greenest city. There are two main lakes, the Upper Lake and the Lower Lake.",
+		description: "DBhopal is a city in the central Indian state of Madhya Pradesh. It's one of India\'s greenest city. There are two main lakes, the Upper Lake and the Lower Lake.",
 		landmarks: [{
 			name: "MANIT",
-			description: "Maulana Azad National Institute of Technology Bhopal is a public technical university located in Bhopal, Madhya Pradesh, India. It is part of a group of publicly funded institutions in India known as National Institutes of Technology.",
+			description: "Maulana Azad National Institute of Technology Bhopal is a public technical university located in Bhopal, Madhya Pradesh, India. It is part of a group of publicly funded institutions in India known as National Institutes of Technology. ",
 		}, {
 			name: "Berasia",
-			description: "Berasia is a landmark and a nagar palika in Bhopal district in the state of Madhya Pradesh, India.",
+			description: "Berasia is a landmark and a nagar palika in Bhopal district in the state of Madhya Pradesh, India. ",
 		}]
 	}, {
 		name: "Gwalior",
-		description: "Gwalior is a city in the central Indian state of Madhya Pradesh. It's known for its palaces and temples, including the Sas Bahu Ka Mandir intricately carved Hindu temple.",
+		description: "Gwalior is a city in the central Indian state of Madhya Pradesh. It's known for its palaces and temples, including the Sas Bahu Ka Mandir intricately carved Hindu temple. ",
 		landmarks: [{
 			name: "Ajaypur",
 			description: "Little less known city Ajaypur.",
@@ -35,7 +36,7 @@ const states = [{
 }, {
 	name: "Jharkhand",
 	description: "Jharkhand is a state in eastern India. It's known for its waterfalls, the elegant Jain temples of Parasnath Hill and the elephants and tigers of Betla National Park.",
-	cities: [{
+	city: [{
 		name: "Dhanbad",
 		description: "Dhanbad is the second-most populated city in the Indian state of Jharkhand. It ranks as the 33rd largest city in India and is the 42nd largest million-plus urban agglomeration in India. It is the 96th fastest growing urban area of the world by the City Mayors Foundation.",
 		landmarks: [{
@@ -47,7 +48,7 @@ const states = [{
 		}]
 	}, {
 		name: "Wasseypur",
-		description: "Wasseypur is a neighbourhood in the city of Dhanbad in Dhanbad Sadar subdivision of Dhanbad district in the state of Jharkhand in India.",
+		description: "Wasseypur is a neighbourhood in the city of Dhanbad in Dhanbad Sadar subdivision of Dhanbad district in the state of Jharkhand in India. ",
 		landmarks: [{
 			name: "Pandey muhalla",
 			description: "Located behind the dhanbad junction is must visit place.",
@@ -68,19 +69,19 @@ const states = [{
 	}]
 }, {
 	name: "Assam",
-	description: "Assam is a state in northeastern India known for its wildlife, archeological sites and tea plantations.",
-	cities: [{
-		name: "Guwahati",
-		description: "Guwahati is a sprawling city beside the Brahmaputra River in the northeast Indian state of Assam. It’s known for holy sites like the hilltop Kamakhya Temple.",
+	description: "Assam is a state in northeastern India known for its wildlife, archeological sites and tea plantations. ",
+	city: [{
+		name: "Guwhati",
+		description: "Guwahati is a sprawling city beside the Brahmaputra River in the northeast Indian state of Assam. It\'s known for holy sites like the hilltop Kamakhya Temple,",
 		landmarks: [{
 			name: "Ganesh Guri",
 			description: "Famous because of PVR city center.",
 		}, {
 			name: "Kalyani Nagar",
-			description: "Located near famous Lakshmi Nagar",
+			description: "located near famous Lakshmi Nagar",
 		}]
 	}, {
-		name: "Dimapur",
+		name: "dimapur",
 		description: "Dimapur is a city in Nagaland, India. It is the most populous city of Nagaland and also the most densely populated city in the state with an estimated population of about 250,000.",
 		landmarks: [{
 			name: "City Tower",
@@ -103,7 +104,7 @@ const states = [{
 }, {
 	name: "Bihar",
 	description: "Bihar is a state in East India, bordering Nepal. It is divided by the River Ganges, which floods its fertile plains. Important Buddhist pilgrimage sites include the Bodhi Tree in Bodhgaya's Mahabodhi Temple, under which the Buddha allegedly meditated.",
-	cities: [{
+	city: [{
 		name: "Patna",
 		description: "Patna is an ancient city that sprawls along the south bank of the Ganges River in Bihar, northeast India.",
 		landmarks: [{
@@ -115,7 +116,7 @@ const states = [{
 		}]
 	}, {
 		name: "Gaya",
-		description: "Gaya is a holy city beside the Falgu River, in the northeast Indian state of Bihar. It’s known for 18th-century Vishnupad Mandir, a riverside temple with an octagonal shrine. Close by, ancient Mangla Gauri Temple is set on a hilltop.",
+		description: "Gaya is a holy city beside the Falgu River, in the northeast Indian state of Bihar. It\'s known for 18th-century Vishnupad Mandir, a riverside temple with an octagonal shrine. Close by, ancient Mangla Gauri Temple is set on a hilltop. ",
 		landmarks: [{
 			name: "Bakraur",
 			description: "Bakraur, sometimes called Bakrour, is a village located slightly east of Bodh Gaya in the state of Bihar, India. It lies directly across the Phalgu River from the landmark of Bodh Gaya, where Gautama Buddha is said to have attained enlightenment.",
@@ -131,119 +132,94 @@ const states = [{
 			description: "Famous for its Groundnut Market",
 		}, {
 			name: "Jale",
-			description: "Famous for its roasted seeds market.",
+			description: "Famous for its roasted seads market.",
 		}]
 	}]
 }];
 
 
-
-
-const initialState = {
-  selectedState: states[0],
-  selectedCity: states[0].cities[0],
-  selectedLandmark: states[0].cities[0].landmarks[0]
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "SELECT_STATE":
-      const newState = states[action.payload];
-      return {
-        ...state,
-        selectedState: newState,
-        selectedCity: newState.cities[0],
-        selectedLandmark: newState.cities[0].landmarks[0]
-      };
-    case "SELECT_CITY":
-      const newCity = state.selectedState.cities[action.payload];
-      return {
-        ...state,
-        selectedCity: newCity,
-        selectedLandmark: newCity.landmarks[0]
-      };
-    case "SELECT_LANDMARK":
-      const newLandmark = state.selectedCity.landmarks[action.payload];
-      return {
-        ...state,
-        selectedLandmark: newLandmark
-      };
-    default:
-      return state;
-  }
-}
-
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+	const [curStateIndx, setCurStateIndx] = useState(0);
+	const [curCityIndx, setCurCityIndx] = useState(0);
+	const [curLandMarkIndx, setCurLandMarkIndx] = useState(0);
 
-  const handleStateChange = (event) => {
-    const stateIndex = event.target.value;
-    dispatch({ type: "SELECT_STATE", payload: stateIndex });
-  };
+	function handleStateChange (e) {
+		const value = parseInt(e.target.value)
+		setCurStateIndx(value);
+		setCurCityIndx(0);
+		setCurLandMarkIndx(0);
+	}
 
-  const handleCityChange = (event) => {
-    const cityIndex = event.target.value;
-    dispatch({ type: "SELECT_CITY", payload: cityIndex });
-  };
+	function handleCityChange (e) {
+		const value = parseInt(e.target.value)
+		setCurCityIndx(value);
+		setCurLandMarkIndx(0);
+	}
 
-  const handleLandmarkChange = (event) => {
-    const landmarkIndex = event.target.value;
-    dispatch({ type: "SELECT_LANDMARK", payload: landmarkIndex });
-  };
+	function handleLandMarkChange (e) {
+		const value = parseInt(e.target.value)
+		setCurLandMarkIndx(value);
+	}
 
-  return (
-    <div id="main">
-      <select
-        id="state"
-        value={states.indexOf(state.selectedState)}
-        onChange={handleStateChange}
-      >
-        {states.map((state, index) => (
-          <option key={index} value={index}>
-            {state.name}
-          </option>
-        ))}
-      </select>
+	// Do not alter/remove main div
+	return (
+		<div id="main">
+			<select onChange={handleStateChange} id="state">
+				{
+					states.map((state, indx) => (
+						<option value={indx} key={indx}>{state.name}</option>
+					))
+				}
+			</select>
 
-      <select
-        id="city"
-        value={state.selectedState.cities.indexOf(state.selectedCity)}
-        onChange={handleCityChange}
-      >
-        {state.selectedState.cities.map((city, index) => (
-          <option key={index} value={index}>
-            {city.name}
-          </option>
-        ))}
-      </select>
+			<select onChange={handleCityChange} id="city">
+				{
+					states[curStateIndx].city.map((town, indx) => (
+						<option value={indx} key={indx}>{town.name}</option>
+					))
+				}
+			</select>
 
-      <select
-        id="landmark"
-        value={state.selectedCity.landmarks.indexOf(state.selectedLandmark)}
-        onChange={handleLandmarkChange}
-      >
-        {state.selectedCity.landmarks.map((landmark, index) => (
-          <option key={index} value={index}>
-            {landmark.name}
-          </option>
-        ))}
-      </select>
+			<select onChange={handleLandMarkChange} id="landmark">
+				{
+					states[curStateIndx].city[curCityIndx].landmarks.map((mark, indx) => (
+						<option value={indx} key={indx}>{mark.name}</option>
+					))
+				}
+			</select>
 
-      <div className="description">
-        <h2>{state.selectedState.name}</h2>
-        <p>{state.selectedState.description}</p>
-        <h3>{state.selectedCity.name}</h3>
-        <p>{state.selectedCity.description}</p>
-        <h4>{state.selectedLandmark.name}</h4>
-        <p>{state.selectedLandmark.description}</p>
-      </div>
-    </div>
-  );
+			<div id="state-name">
+				{states[curStateIndx].name}
+			</div>
+			<div id="state-description">
+				{states[curStateIndx].description}
+			</div>
+			<div id="state-title">
+				{states[curStateIndx].name}
+			</div>
+
+			<div id="city-name">
+				{states[curStateIndx].city[curCityIndx].name}
+			</div>
+			<div id="city-description">
+				{states[curStateIndx].city[curCityIndx].description}
+			</div>
+			<div id="city-title">
+				{states[curStateIndx].city[curCityIndx].name}
+			</div>
+
+			<div id="landmark-name">
+				{states[curStateIndx].city[curCityIndx].landmarks[curLandMarkIndx].name}
+			</div>
+			<div id="landmark-description">
+				{states[curStateIndx].city[curCityIndx].landmarks[curLandMarkIndx].description}
+			</div>
+			<div id="landmark-title">
+				{states[curStateIndx].city[curCityIndx].landmarks[curLandMarkIndx].name}
+			</div>
+		</div>
+	);
 }
+
 
 export default App;
-
-
-	
-					
-				
